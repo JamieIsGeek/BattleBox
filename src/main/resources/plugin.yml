@@ -2,3 +2,8 @@ name: BattleBox
 version: '${project.version}'
 main: uk.jamieisgeek.battlebox.BattleBox
 api-version: 1.19
+commands:
+  battleboxtest:
+    aliases: bbt
+    description: BattleBox test command
+    permission: battlebox.test

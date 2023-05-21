@@ -1,0 +1,7 @@
+sql:
+  host: 127.0.0.1
+  port: 3306
+  database: battlebox
+  username: root
+  password: password
+  table_prefix: bb_
