@@ -5,3 +5,17 @@ sql:
   username: root
   password: password
   table_prefix: bb_
+
+
+arena:
+  team1:
+    x: 69
+    y: 69
+    z: 69
+    block: "BLUE_WOOL"
+  team2:
+    x: -69
+    y: 69
+    z: -69
+    block: "RED_WOOL"
+  world: "battlebox"
