@@ -1,0 +1,4 @@
+name: BattleBox
+version: '${project.version}'
+main: uk.jamieisgeek.battlebox.BattleBox
+api-version: 1.19
