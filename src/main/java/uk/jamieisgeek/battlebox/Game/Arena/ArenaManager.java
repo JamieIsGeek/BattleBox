@@ -40,4 +40,12 @@ public class ArenaManager {
         this.team2 = Material.valueOf(configHandler.getFromConfig("arena.team2.block").toString());
         this.center = Material.valueOf(configHandler.getFromConfig("arena.center.block").toString());
     }
+
+    public void Prepare() {
+
+    }
+
+    public Arena getArena() {
+        return arena;
+    }
 }

@@ -4,6 +4,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import uk.jamieisgeek.battlebox.Commands.BattleBoxAdmin;
 import uk.jamieisgeek.battlebox.Commands.BattleBoxCommand;
+import uk.jamieisgeek.battlebox.Game.GameManager;
 import uk.jamieisgeek.battlebox.Game.Queue.QueueManager;
 import uk.jamieisgeek.battlebox.Game.State.GameState;
 import uk.jamieisgeek.battlebox.Storage.Config.ConfigHandler;
@@ -14,6 +15,7 @@ public final class BattleBox extends JavaPlugin {
     private ConfigHandler configHandler;
     private QueueManager queueManager;
     private GameState gameState;
+    private GameManager gameManager;
     private static BattleBox plugin;
 
     @Override
@@ -69,5 +71,9 @@ public final class BattleBox extends JavaPlugin {
 
     public GameState getGameState() {
         return gameState;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
     }
 }

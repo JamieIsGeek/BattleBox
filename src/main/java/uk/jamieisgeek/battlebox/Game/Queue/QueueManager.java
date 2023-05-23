@@ -19,6 +19,10 @@ public class QueueManager {
     public void add(UUID uuid, String name) {
         queue.put(uuid, name);
         plugin.getLogger().info("Added " + uuid + " to the queue");
+
+        if(isFull()) {
+            queue.forEach((uuid1, name1) -> plugin.getServer().getPlayer(uuid1).sendMessage(plugin.getConfigHandler().getFromMessages("game.starting")));
+        }
     }
 
     public void remove(UUID uuid) {
