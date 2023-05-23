@@ -1,0 +1,10 @@
+error:
+  already_in_queue: "&c&lYou are already in the queue!"
+  game_already_started: "&c&lThe game has already started!"
+  queue_full: "&c&lThe queue is full!"
+  no_permission: "&c&lYou do not have permission to do that!"
+  not_in_queue: "&c&lYou are not in the queue!"
+
+queue:
+  joined: "&a&lYou have joined the queue!"
+  left: "&c&lYou have left the queue!"

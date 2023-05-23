@@ -3,7 +3,10 @@ version: '${project.version}'
 main: uk.jamieisgeek.battlebox.BattleBox
 api-version: 1.19
 commands:
-  battleboxtest:
-    aliases: bbt
+  battlebox:
+    aliases: bb
     description: BattleBox test command
-    permission: battlebox.test
+
+  battleboxadmin:
+    aliases: bba
+    description: BattleBox admin command

@@ -5,9 +5,14 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import uk.jamieisgeek.battlebox.BattleBox;
+import uk.jamieisgeek.battlebox.Game.State.State;
 import uk.jamieisgeek.battlebox.ScoreboardAssistant;
 
 public class BattleBoxCommand implements CommandExecutor {
+    private final BattleBox plugin;
+    public BattleBoxCommand(BattleBox plugin) {
+        this.plugin = plugin;
+    }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(!(sender instanceof Player player)) {
@@ -19,19 +24,39 @@ public class BattleBoxCommand implements CommandExecutor {
 
         if(args.length == 1) {
             switch(args[0].toLowerCase()) {
-                case "test" -> {
-                    int playerScore = BattleBox.getPlugin().getDatabase().getDatabaseManager().getPlayerScore(player.getName());
-                    ScoreboardAssistant scoreboardAssistant = new ScoreboardAssistant(5, "&6&lBattleBox");
-                    scoreboardAssistant.setLine(player, 0, "&c&lTeam: &e&lRed");
-                    scoreboardAssistant.setLine(player, 1, "&c&lKills: &e&l0");
-                    scoreboardAssistant.setLine(player, 2, "&c&lScore: &e&l" + playerScore);
+                case "join" -> {
+                    if(plugin.getQueueManager().contains(player.getUniqueId())) {
+                        player.sendMessage(plugin.getConfigHandler().getFromMessages("error.already_in_queue"));
+                        return true;
+                    }
 
-                    scoreboardAssistant.displayForPlayer(player);
-                    player.sendMessage();
+                    if(plugin.getGameState().isState(State.ENDING) || plugin.getGameState().isState(State.IN_PROGRESS)) {
+                        player.sendMessage(plugin.getConfigHandler().getFromMessages("error.game_already_started"));
+                        return true;
+                    }
+
+                    if(plugin.getQueueManager().isFull()) {
+                        player.sendMessage(plugin.getConfigHandler().getFromMessages("error.queue_full"));
+                        return true;
+                    }
+
+                    plugin.getQueueManager().add(player.getUniqueId(), player.getName());
+                    player.sendMessage(plugin.getConfigHandler().getFromMessages("queue.joined"));
                 }
 
-                case "reset" -> {
-                    new ScoreboardAssistant(0, "&6&lBattleBox").removePlayerFromScoreboard(player);
+                case "leave" -> {
+                    if(!plugin.getQueueManager().contains(player.getUniqueId())) {
+                        player.sendMessage(plugin.getConfigHandler().getFromMessages("error.not_in_queue"));
+                        return true;
+                    }
+
+                    if(plugin.getGameState().isState(State.ENDING) || plugin.getGameState().isState(State.IN_PROGRESS)) {
+                        player.sendMessage(plugin.getConfigHandler().getFromMessages("error.game_already_started"));
+                        return true;
+                    }
+
+                    plugin.getQueueManager().remove(player.getUniqueId());
+                    player.sendMessage(plugin.getConfigHandler().getFromMessages("queue.left"));
                 }
             }
         }

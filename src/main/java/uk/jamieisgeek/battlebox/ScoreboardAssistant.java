@@ -123,6 +123,10 @@ public class ScoreboardAssistant {
         }
     }
 
+    public void QueueScoreboard(Player player) {
+
+    }
+
     public int getNumLines() {
         return numLines;
     }

@@ -2,13 +2,18 @@ package uk.jamieisgeek.battlebox;
 
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
+import uk.jamieisgeek.battlebox.Commands.BattleBoxAdmin;
 import uk.jamieisgeek.battlebox.Commands.BattleBoxCommand;
+import uk.jamieisgeek.battlebox.Game.Queue.QueueManager;
+import uk.jamieisgeek.battlebox.Game.State.GameState;
 import uk.jamieisgeek.battlebox.Storage.Config.ConfigHandler;
 import uk.jamieisgeek.battlebox.Storage.Database.Database;
 
 public final class BattleBox extends JavaPlugin {
     private Database database;
     private ConfigHandler configHandler;
+    private QueueManager queueManager;
+    private GameState gameState;
     private static BattleBox plugin;
 
     @Override
@@ -28,9 +33,12 @@ public final class BattleBox extends JavaPlugin {
                 configHandler.getFromConfig("sql.port").toString(),
                 configHandler.getFromConfig("sql.table_prefix").toString()
         );
+        this.queueManager = new QueueManager(this);
+        this.gameState = new GameState();
 
         plugin = this;
-        this.getCommand("battleboxtest").setExecutor(new BattleBoxCommand());
+        this.getCommand("battlebox").setExecutor(new BattleBoxCommand(this));
+        this.getCommand("battleboxadmin").setExecutor(new BattleBoxAdmin(this));
         getLogger().info(ChatColor.GREEN + "BattleBox has been enabled!");
     }
 
@@ -52,8 +60,14 @@ public final class BattleBox extends JavaPlugin {
     public ConfigHandler getConfigHandler() {
         return configHandler;
     }
-
     public static BattleBox getPlugin() {
         return plugin;
+    }
+    public QueueManager getQueueManager() {
+        return queueManager;
+    }
+
+    public GameState getGameState() {
+        return gameState;
     }
 }

@@ -1,5 +1,6 @@
 package uk.jamieisgeek.battlebox.Storage.Config;
 
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import uk.jamieisgeek.battlebox.BattleBox;
@@ -47,6 +48,6 @@ public class ConfigHandler {
     }
 
     public String getFromMessages(String path) {
-        return messages.getString(path);
+        return ChatColor.translateAlternateColorCodes('&', messages.getString(path));
     }
 }
