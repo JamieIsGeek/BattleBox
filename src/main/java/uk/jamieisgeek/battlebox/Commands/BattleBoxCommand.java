@@ -45,6 +45,7 @@ public class BattleBoxCommand implements CommandExecutor {
                     plugin.getQueueManager().add(player.getUniqueId(), player.getName());
                     commandHelper.ShowQueueScoreboard();
                     player.sendMessage(plugin.getConfigHandler().getFromMessages("queue.joined"));
+                    commandHelper.AlertQueueAction(player, "join");
                 }
 
                 case "leave" -> {
@@ -61,6 +62,7 @@ public class BattleBoxCommand implements CommandExecutor {
                     plugin.getQueueManager().remove(player.getUniqueId());
                     commandHelper.RemoveScoreboard(player);
                     player.sendMessage(plugin.getConfigHandler().getFromMessages("queue.left"));
+                    commandHelper.AlertQueueAction(player, "leave");
                 }
             }
         }

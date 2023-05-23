@@ -1,5 +1,6 @@
 package uk.jamieisgeek.battlebox.Commands.Helpers;
 
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import uk.jamieisgeek.battlebox.BattleBox;
 import uk.jamieisgeek.battlebox.ScoreboardAssistant;
@@ -25,5 +26,17 @@ public class CommandHelper {
         scoreboardAssistant.removePlayerFromScoreboard(player);
 
         this.ShowQueueScoreboard();
+    }
+
+    public void AlertQueueAction(Player player, String action) {
+        switch (action) {
+            case "join" -> plugin.getQueueManager().getQueue().forEach((uuid, name) -> {
+                plugin.getServer().getPlayer(uuid).sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + player.getName() + " has joined the queue! (" + plugin.getQueueManager().getQueue().size() + "/8)");
+            });
+
+            case "leave" -> plugin.getQueueManager().getQueue().forEach((uuid, name) -> {
+                plugin.getServer().getPlayer(uuid).sendMessage(ChatColor.RED + "" + ChatColor.BOLD + player.getName() + " has left the queue! (" + plugin.getQueueManager().getQueue().size() + "/8)");
+            });
+        }
     }
 }
