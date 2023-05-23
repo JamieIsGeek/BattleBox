@@ -5,13 +5,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import uk.jamieisgeek.battlebox.BattleBox;
+import uk.jamieisgeek.battlebox.Commands.Helpers.CommandHelper;
 import uk.jamieisgeek.battlebox.Game.State.State;
-import uk.jamieisgeek.battlebox.ScoreboardAssistant;
 
 public class BattleBoxCommand implements CommandExecutor {
     private final BattleBox plugin;
+    private final CommandHelper commandHelper;
     public BattleBoxCommand(BattleBox plugin) {
         this.plugin = plugin;
+        this.commandHelper = new CommandHelper(plugin);
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -41,6 +43,7 @@ public class BattleBoxCommand implements CommandExecutor {
                     }
 
                     plugin.getQueueManager().add(player.getUniqueId(), player.getName());
+                    commandHelper.ShowQueueScoreboard();
                     player.sendMessage(plugin.getConfigHandler().getFromMessages("queue.joined"));
                 }
 
@@ -56,6 +59,7 @@ public class BattleBoxCommand implements CommandExecutor {
                     }
 
                     plugin.getQueueManager().remove(player.getUniqueId());
+                    commandHelper.RemoveScoreboard(player);
                     player.sendMessage(plugin.getConfigHandler().getFromMessages("queue.left"));
                 }
             }

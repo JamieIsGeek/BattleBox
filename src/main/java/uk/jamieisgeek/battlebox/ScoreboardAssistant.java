@@ -123,8 +123,15 @@ public class ScoreboardAssistant {
         }
     }
 
-    public void QueueScoreboard(Player player) {
+    public void QueueScoreboard() {
+        BattleBox plugin = BattleBox.getPlugin();
+        this.setUniversalLine(0, "&e&lWaiting for players...");
+        this.setUniversalLine(2, "&7Players: &f" + plugin.getQueueManager().getQueue().size() + "/ 8");
 
+        plugin.getQueueManager().getQueue().forEach((uuid, name) -> {
+            Player player = Bukkit.getPlayer(uuid);
+            this.displayForPlayer(player);
+        });
     }
 
     public int getNumLines() {
