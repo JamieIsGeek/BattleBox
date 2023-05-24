@@ -10,7 +10,7 @@ import uk.jamieisgeek.battlebox.Game.State.GameState;
 import uk.jamieisgeek.battlebox.Storage.Config.ConfigHandler;
 import uk.jamieisgeek.battlebox.Storage.Database.Database;
 
-public final class BattleBox extends JavaPlugin {
+public class BattleBox extends JavaPlugin {
     private Database database;
     private ConfigHandler configHandler;
     private QueueManager queueManager;
@@ -27,6 +27,7 @@ public final class BattleBox extends JavaPlugin {
         }
 
         this.configHandler = new ConfigHandler(this);
+        /*
         this.database = new Database(
                 configHandler.getFromConfig("sql.host").toString(),
                 configHandler.getFromConfig("sql.database").toString(),
@@ -35,8 +36,10 @@ public final class BattleBox extends JavaPlugin {
                 configHandler.getFromConfig("sql.port").toString(),
                 configHandler.getFromConfig("sql.table_prefix").toString()
         );
+         */
         this.queueManager = new QueueManager(this);
         this.gameState = new GameState();
+        this.gameManager = new GameManager(this);
 
         plugin = this;
         this.getCommand("battlebox").setExecutor(new BattleBoxCommand(this));

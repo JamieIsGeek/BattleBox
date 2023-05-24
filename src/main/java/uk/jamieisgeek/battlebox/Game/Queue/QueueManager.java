@@ -2,9 +2,7 @@ package uk.jamieisgeek.battlebox.Game.Queue;
 
 import uk.jamieisgeek.battlebox.BattleBox;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.UUID;
 
 public class QueueManager {
