@@ -4,9 +4,12 @@ import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 import uk.jamieisgeek.battlebox.Commands.BattleBoxAdmin;
 import uk.jamieisgeek.battlebox.Commands.BattleBoxCommand;
+import uk.jamieisgeek.battlebox.Game.GUI.GUIManager;
 import uk.jamieisgeek.battlebox.Game.GameManager;
+import uk.jamieisgeek.battlebox.Game.Kits.KitManager;
 import uk.jamieisgeek.battlebox.Game.Queue.QueueManager;
 import uk.jamieisgeek.battlebox.Game.State.GameState;
+import uk.jamieisgeek.battlebox.Listeners.Kits.KitGUIListener;
 import uk.jamieisgeek.battlebox.Storage.Config.ConfigHandler;
 import uk.jamieisgeek.battlebox.Storage.Database.Database;
 
@@ -16,10 +19,13 @@ public class BattleBox extends JavaPlugin {
     private QueueManager queueManager;
     private GameState gameState;
     private GameManager gameManager;
+    private KitManager kitManager;
+    private GUIManager guiManager;
     private static BattleBox plugin;
 
     @Override
     public void onEnable() {
+        plugin = this;
         try {
             Class.forName("org.mariadb.jdbc.Driver");
         } catch (ClassNotFoundException e) {
@@ -27,7 +33,7 @@ public class BattleBox extends JavaPlugin {
         }
 
         this.configHandler = new ConfigHandler(this);
-        /*
+
         this.database = new Database(
                 configHandler.getFromConfig("sql.host").toString(),
                 configHandler.getFromConfig("sql.database").toString(),
@@ -36,14 +42,17 @@ public class BattleBox extends JavaPlugin {
                 configHandler.getFromConfig("sql.port").toString(),
                 configHandler.getFromConfig("sql.table_prefix").toString()
         );
-         */
+
         this.queueManager = new QueueManager(this);
         this.gameState = new GameState();
         this.gameManager = new GameManager(this);
+        this.guiManager = new GUIManager();
+        this.kitManager = new KitManager();
 
-        plugin = this;
         this.getCommand("battlebox").setExecutor(new BattleBoxCommand(this));
         this.getCommand("battleboxadmin").setExecutor(new BattleBoxAdmin(this));
+
+        this.getServer().getPluginManager().registerEvents(new KitGUIListener(), this);
         getLogger().info(ChatColor.GREEN + "BattleBox has been enabled!");
     }
 
@@ -78,5 +87,13 @@ public class BattleBox extends JavaPlugin {
 
     public GameManager getGameManager() {
         return gameManager;
+    }
+
+    public KitManager getKitManager() {
+        return kitManager;
+    }
+
+    public GUIManager getGuiManager() {
+        return guiManager;
     }
 }

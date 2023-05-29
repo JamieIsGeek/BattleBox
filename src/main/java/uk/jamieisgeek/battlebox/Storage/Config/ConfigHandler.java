@@ -2,6 +2,7 @@ package uk.jamieisgeek.battlebox.Storage.Config;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.Configuration;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import uk.jamieisgeek.battlebox.BattleBox;
 
@@ -12,12 +13,14 @@ import java.util.List;
 
 public class ConfigHandler {
     private final BattleBox plugin;
+    private final ConfigHandler configHandler;
     private Configuration config;
     private Configuration messages;
     List<File> IslandSchems = new ArrayList<>();
 
     public ConfigHandler(BattleBox plugin) {
         this.plugin = plugin;
+        this.configHandler = this;
         this.initialize();
     }
 
@@ -43,8 +46,15 @@ public class ConfigHandler {
         }
     }
 
+    public static ConfigHandler getConfigHandler() {
+        return BattleBox.getPlugin().getConfigHandler();
+    }
+
     public Object getFromConfig(String path) {
         return config.get(path);
+    }
+    public ConfigurationSection getConfigurationSection(String path) {
+        return config.getConfigurationSection(path);
     }
 
     public String getFromMessages(String path) {

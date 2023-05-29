@@ -9,13 +9,29 @@ sql:
 
 arena:
   team1:
-    x: 69
-    y: 69
-    z: 69
+    x: 69.0
+    y: 69.0
+    z: 69.0
     block: "BLUE_WOOL"
   team2:
-    x: -69
-    y: 69
-    z: -69
+    x: -69.0
+    y: 69.0
+    z: -69.0
     block: "RED_WOOL"
   world: "battlebox"
+
+  center:
+    block: "GOLD_BLOCK"
+
+kits:
+  archer:
+    name: "Archer"
+    description: "pew pew shooty bow"
+    items:
+      - "BOW"
+      - "ARROW"
+      - "ARROW"
+      - "ARROW"
+      - "ARROW"
+      - "GOLDEN_APPLE"
+    icon: "BOW"

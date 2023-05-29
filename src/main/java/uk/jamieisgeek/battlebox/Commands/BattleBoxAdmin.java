@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import uk.jamieisgeek.battlebox.BattleBox;
+import uk.jamieisgeek.battlebox.Game.GUI.GUIManager;
 
 public class BattleBoxAdmin implements CommandExecutor {
     private final BattleBox plugin;
@@ -34,6 +35,10 @@ public class BattleBoxAdmin implements CommandExecutor {
                 player.sendMessage(ChatColor.YELLOW + "Players in queue:\n");
 
                 plugin.getQueueManager().getQueue().forEach((uuid, name) -> player.sendMessage(ChatColor.YELLOW + "- " + name + "\n"));
+            }
+
+            case "kitmenu" -> {
+                GUIManager.getGuiManager().kits(player);
             }
         }
         return true;
