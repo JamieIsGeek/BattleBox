@@ -70,7 +70,6 @@ public class BattleBox extends JavaPlugin {
     public Database getDatabase() {
         return database;
     }
-
     public ConfigHandler getConfigHandler() {
         return configHandler;
     }
@@ -80,19 +79,15 @@ public class BattleBox extends JavaPlugin {
     public QueueManager getQueueManager() {
         return queueManager;
     }
-
     public GameState getGameState() {
         return gameState;
     }
-
     public GameManager getGameManager() {
         return gameManager;
     }
-
     public KitManager getKitManager() {
         return kitManager;
     }
-
     public GUIManager getGuiManager() {
         return guiManager;
     }
