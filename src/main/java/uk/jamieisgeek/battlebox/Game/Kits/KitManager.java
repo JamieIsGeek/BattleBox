@@ -2,7 +2,9 @@ package uk.jamieisgeek.battlebox.Game.Kits;
 
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import uk.jamieisgeek.battlebox.Storage.Config.ConfigHandler;
 
@@ -28,7 +30,8 @@ public class KitManager {
                 configHandler.getFromConfig("kits." + key + ".name").toString(),
                 configHandler.getFromConfig("kits." + key + ".description").toString(),
                 configHandler.getFromConfig("kits." + key + ".icon").toString(),
-                configHandler.getFromConfig("kits." + key + ".items").toString().split(",")
+                configHandler.getFromConfig("kits." + key + ".items").toString().split(","),
+                configHandler.getFromConfig("kits." + key + ".armor").toString().split(",")
             );
 
             this.kits.add(kit);
@@ -46,8 +49,61 @@ public class KitManager {
         }
 
         for (String item : kit.items()) {
-            ItemStack itemStack = new ItemStack(Material.valueOf(item), 1);
+            if(kit.name().contains(":")) {
+                continue;
+            }
+
+            String newItem = item;
+
+            if(item.contains("[")) {
+                newItem = item.replace("[", "");
+            }
+
+            if(item.contains("]")) {
+                newItem = newItem.replace("]", "");
+            }
+
+            if(item.contains(" ")) {
+                newItem = newItem.replace(" ", "");
+            }
+
+            String[] itemInfo = newItem.split(":");
+
+            int amount = Integer.parseInt(itemInfo[1]);
+            String itemName = itemInfo[0];
+
+            ItemStack itemStack = new ItemStack(Material.valueOf(itemName), amount);
             player.getInventory().addItem(itemStack);
+        }
+
+        for (String armor : kit.armor()) {
+            String newItem = armor;
+
+            if(armor.contains("[")) {
+                newItem = armor.replace("[", "");
+            }
+
+            if(armor.contains("]")) {
+                newItem = newItem.replace("]", "");
+            }
+
+            if(armor.contains(" ")) {
+                newItem = newItem.replace(" ", "");
+            }
+
+
+            Material armorMaterial = Material.valueOf(newItem);
+            ItemStack item = new ItemStack(armorMaterial, 1);
+
+            if(armorMaterial.getEquipmentSlot().equals(EquipmentSlot.HEAD)) {
+                player.getInventory().setHelmet(item);
+            } else if (armorMaterial.getEquipmentSlot().equals(EquipmentSlot.CHEST)) {
+                player.getInventory().setChestplate(item);
+            } else if (armorMaterial.getEquipmentSlot().equals(EquipmentSlot.LEGS)) {
+                player.getInventory().setLeggings(item);
+            } else if (armorMaterial.getEquipmentSlot().equals(EquipmentSlot.FEET)){
+                player.getInventory().setBoots(item);
+            }
         }
     }
 

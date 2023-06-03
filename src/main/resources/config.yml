@@ -28,10 +28,20 @@ kits:
     name: "Archer"
     description: "pew pew shooty bow"
     items:
-      - "BOW"
-      - "ARROW"
-      - "ARROW"
-      - "ARROW"
-      - "ARROW"
-      - "GOLDEN_APPLE"
+      - "BOW:1"
+      - "ARROW:64"
+      - "GOLDEN_APPLE:32"
     icon: "BOW"
+
+  swordsman:
+    name: "Swordsman"
+    description: "swish swish stabby sword"
+    items:
+      - "DIAMOND_SWORD:1"
+      - "GOLDEN_APPLE:32"
+    armor:
+        - "DIAMOND_HELMET"
+        - "DIAMOND_CHESTPLATE"
+        - "DIAMOND_LEGGINGS"
+        - "DIAMOND_BOOTS"
+    icon: "DIAMOND_SWORD"
