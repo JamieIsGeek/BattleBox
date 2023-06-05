@@ -37,9 +37,8 @@ public class BattleBoxAdmin implements CommandExecutor {
                 plugin.getQueueManager().getQueue().forEach((uuid, name) -> player.sendMessage(ChatColor.YELLOW + "- " + name + "\n"));
             }
 
-            case "kitmenu" -> {
-                GUIManager.getGuiManager().kits(player);
-            }
+            case "kitmenu" -> GUIManager.getGuiManager().kits(player);
+            case "killself" -> plugin.getGameManager().killPlayer(player, "Dream OPMG REALLL!!!!!");
         }
         return true;
     }

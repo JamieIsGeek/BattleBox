@@ -1,9 +1,10 @@
-package uk.jamieisgeek.battlebox;
+package uk.jamieisgeek.battlebox.Misc;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
+import uk.jamieisgeek.battlebox.BattleBox;
 
 import java.util.HashMap;
 import java.util.Map;

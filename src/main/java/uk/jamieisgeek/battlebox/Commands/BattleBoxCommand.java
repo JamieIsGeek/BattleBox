@@ -5,15 +5,15 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import uk.jamieisgeek.battlebox.BattleBox;
-import uk.jamieisgeek.battlebox.Commands.Helpers.CommandHelper;
+import uk.jamieisgeek.battlebox.Misc.ScoreboardHelper;
 import uk.jamieisgeek.battlebox.Game.State.State;
 
 public class BattleBoxCommand implements CommandExecutor {
     private final BattleBox plugin;
-    private final CommandHelper commandHelper;
+    private final ScoreboardHelper scoreboardHelper;
     public BattleBoxCommand(BattleBox plugin) {
         this.plugin = plugin;
-        this.commandHelper = new CommandHelper(plugin);
+        this.scoreboardHelper = new ScoreboardHelper(plugin);
     }
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
@@ -43,9 +43,9 @@ public class BattleBoxCommand implements CommandExecutor {
                     }
 
                     plugin.getQueueManager().add(player.getUniqueId(), player.getName());
-                    commandHelper.ShowQueueScoreboard();
+                    scoreboardHelper.ShowQueueScoreboard();
                     player.sendMessage(plugin.getConfigHandler().getFromMessages("queue.joined"));
-                    commandHelper.AlertQueueAction(player, "join");
+                    plugin.getQueueManager().AlertQueueAction(player, "join");
                 }
 
                 case "leave" -> {
@@ -60,9 +60,9 @@ public class BattleBoxCommand implements CommandExecutor {
                     }
 
                     plugin.getQueueManager().remove(player.getUniqueId());
-                    commandHelper.RemoveScoreboard(player);
+                    scoreboardHelper.RemoveScoreboard(player);
                     player.sendMessage(plugin.getConfigHandler().getFromMessages("queue.left"));
-                    commandHelper.AlertQueueAction(player, "leave");
+                    plugin.getQueueManager().AlertQueueAction(player, "leave");
                 }
             }
         }

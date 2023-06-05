@@ -48,24 +48,14 @@ public class KitManager {
             throw new NullPointerException("Kit " + kitName + " does not exist");
         }
 
+        String newItem;
+
         for (String item : kit.items()) {
             if(kit.name().contains(":")) {
                 continue;
             }
 
-            String newItem = item;
-
-            if(item.contains("[")) {
-                newItem = item.replace("[", "");
-            }
-
-            if(item.contains("]")) {
-                newItem = newItem.replace("]", "");
-            }
-
-            if(item.contains(" ")) {
-                newItem = newItem.replace(" ", "");
-            }
+            newItem = strip(item);
 
             String[] itemInfo = newItem.split(":");
 
@@ -77,20 +67,7 @@ public class KitManager {
         }
 
         for (String armor : kit.armor()) {
-            String newItem = armor;
-
-            if(armor.contains("[")) {
-                newItem = armor.replace("[", "");
-            }
-
-            if(armor.contains("]")) {
-                newItem = newItem.replace("]", "");
-            }
-
-            if(armor.contains(" ")) {
-                newItem = newItem.replace(" ", "");
-            }
-
+            newItem = strip(armor);
 
             Material armorMaterial = Material.valueOf(newItem);
             ItemStack item = new ItemStack(armorMaterial, 1);
@@ -105,6 +82,22 @@ public class KitManager {
                 player.getInventory().setBoots(item);
             }
         }
+    }
+
+    private String strip(String string) {
+        if(string.contains("[")) {
+            string = string.replace("[", "");
+        }
+
+        if(string.contains("]")) {
+            string = string.replace("]", "");
+        }
+
+        if(string.contains(" ")) {
+            string = string.replace(" ", "");
+        }
+
+        return string;
     }
 
     public List<Kit> getKits() {

@@ -1,6 +1,11 @@
 package uk.jamieisgeek.battlebox.Game.Queue;
 
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import uk.jamieisgeek.battlebox.BattleBox;
+import uk.jamieisgeek.battlebox.Game.State.State;
+import uk.jamieisgeek.battlebox.Misc.ScoreboardAssistant;
 
 import java.util.HashMap;
 import java.util.UUID;
@@ -20,12 +25,28 @@ public class QueueManager {
 
         if(isFull()) {
             queue.forEach((uuid1, name1) -> plugin.getServer().getPlayer(uuid1).sendMessage(plugin.getConfigHandler().getFromMessages("game.starting")));
+            plugin.getGameManager().Setup();
         }
     }
 
     public void remove(UUID uuid) {
         queue.remove(uuid);
-        plugin.getLogger().info("Removed " + uuid + " from the queue");
+
+        AlertQueueAction(Bukkit.getPlayer(uuid), "leave");
+
+        if(Bukkit.getPlayer(uuid) != null) {
+            Bukkit.getPlayer(uuid).sendMessage(plugin.getConfigHandler().getFromMessages("queue.leave"));
+        }
+
+
+    }
+
+    public void AlertQueueAction(Player player, String action) {
+        switch (action) {
+            case "join" -> getQueue().forEach((uuid, name) -> plugin.getServer().getPlayer(uuid).sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + player.getName() + " has joined the queue! (" + plugin.getQueueManager().getQueue().size() + "/8)"));
+
+            case "leave" -> getQueue().forEach((uuid, name) -> plugin.getServer().getPlayer(uuid).sendMessage(ChatColor.RED + "" + ChatColor.BOLD + player.getName() + " has left the queue! (" + plugin.getQueueManager().getQueue().size() + "/8)"));
+        }
     }
 
     public boolean contains(UUID uuid) {

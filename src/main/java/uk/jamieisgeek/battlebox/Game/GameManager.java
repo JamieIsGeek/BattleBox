@@ -1,12 +1,18 @@
 package uk.jamieisgeek.battlebox.Game;
 
+import org.bukkit.*;
+import org.bukkit.Color;
+import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
+import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.meta.FireworkMeta;
 import uk.jamieisgeek.battlebox.BattleBox;
 import uk.jamieisgeek.battlebox.Game.Arena.ArenaManager;
 import uk.jamieisgeek.battlebox.Game.State.GameState;
 import uk.jamieisgeek.battlebox.Game.State.State;
 
 import java.util.*;
+import java.util.List;
 
 public class GameManager {
     private final BattleBox plugin;
@@ -37,7 +43,10 @@ public class GameManager {
         this.TeleportPlayers();
 
         // Show kit selection
-
+        plugin.getQueueManager().getQueue().forEach((uuid, s) -> {
+            Player player = Bukkit.getPlayer(uuid);
+            plugin.getGuiManager().kits(player);
+        });
     }
 
     private void TeleportPlayers() {
@@ -68,6 +77,44 @@ public class GameManager {
             } else {
                 team2.add(randomKey);
             }
+        }
+    }
+
+    public void killPlayer(Player player, String killer) {
+        Location location = player.getLocation();
+        String team;
+        if(team1.contains(player.getUniqueId())) {
+            team = "team1";
+        } else {
+            team = "team2";
+        }
+
+        Location fireworkLoc = new Location(location.getWorld(), location.getX(), location.getY() + 2, location.getZ());
+
+        Firework firework = location.getWorld().spawn(fireworkLoc, Firework.class);
+        FireworkMeta fwm = firework.getFireworkMeta();
+        fwm.addEffect(FireworkEffect.builder().withColor(getTeamColor(team)).with(FireworkEffect.Type.BALL).build());
+        firework.setFireworkMeta(fwm);
+
+        firework.detonate();
+
+        player.setGameMode(GameMode.SPECTATOR);
+        plugin.getQueueManager().getQueue().forEach((uuid, s) -> {
+            if(uuid.equals(player.getUniqueId())) {
+                player.sendMessage(ChatColor.RED + String.valueOf(ChatColor.BOLD) + "You have been eliminated!");
+            } else {
+                Player receiver = Bukkit.getPlayer(uuid);
+                if(receiver == null) return;
+                receiver.sendMessage(ChatColor.RED + String.valueOf(ChatColor.BOLD) + player.getName() + " has been eliminated by " + killer);
+            }
+        });
+    }
+
+    private Color getTeamColor(String team) {
+        if(team.equals("team1")) {
+            return Color.AQUA;
+        } else {
+            return Color.RED;
         }
     }
 }
