@@ -2,7 +2,6 @@ package uk.jamieisgeek.battlebox.Game;
 
 import org.bukkit.*;
 import org.bukkit.Color;
-import org.bukkit.craftbukkit.v1_19_R1.CraftWorld;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;

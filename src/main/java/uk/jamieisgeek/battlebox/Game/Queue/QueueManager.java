@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import uk.jamieisgeek.battlebox.BattleBox;
-import uk.jamieisgeek.battlebox.Game.State.State;
-import uk.jamieisgeek.battlebox.Misc.ScoreboardAssistant;
 
 import java.util.HashMap;
 import java.util.UUID;
