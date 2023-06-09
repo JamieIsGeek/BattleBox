@@ -1,7 +1,6 @@
 package uk.jamieisgeek.battlebox.Game;
 
 import org.bukkit.*;
-import org.bukkit.Color;
 import org.bukkit.entity.Firework;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
@@ -9,9 +8,10 @@ import uk.jamieisgeek.battlebox.BattleBox;
 import uk.jamieisgeek.battlebox.Game.Arena.ArenaManager;
 import uk.jamieisgeek.battlebox.Game.State.GameState;
 import uk.jamieisgeek.battlebox.Game.State.State;
+import uk.jamieisgeek.battlebox.Misc.Countdown;
+import uk.jamieisgeek.battlebox.Misc.ScoreboardHelper;
 
 import java.util.*;
-import java.util.List;
 
 public class GameManager {
     private final BattleBox plugin;
@@ -46,6 +46,14 @@ public class GameManager {
             Player player = Bukkit.getPlayer(uuid);
             plugin.getGuiManager().kits(player);
         });
+
+        new Countdown().beginCountdown();
+    }
+
+    public void beginGame() {
+        plugin.getQueueManager().getQueue().forEach((uuid, name) -> {
+            Bukkit.getPlayer(uuid).sendMessage("do the game :nodders:");
+        });
     }
 
     private void TeleportPlayers() {
@@ -71,7 +79,7 @@ public class GameManager {
 
             queue.remove(randomKey);
 
-            if (i < queue.size() / 4) {
+            if (i < queue.size() / 2) {
                 team1.add(randomKey);
             } else {
                 team2.add(randomKey);
@@ -84,8 +92,10 @@ public class GameManager {
         String team;
         if(team1.contains(player.getUniqueId())) {
             team = "team1";
+            team1.remove(player.getUniqueId());
         } else {
             team = "team2";
+            team2.remove(player.getUniqueId());
         }
 
         Location fireworkLoc = new Location(location.getWorld(), location.getX(), location.getY() + 2, location.getZ());
@@ -107,6 +117,14 @@ public class GameManager {
                 receiver.sendMessage(ChatColor.RED + String.valueOf(ChatColor.BOLD) + player.getName() + " has been eliminated by " + killer);
             }
         });
+
+        if(team1.isEmpty() || team2.isEmpty()) {
+            this.endGame();
+        }
+    }
+
+    public void endGame() {
+        plugin.getQueueManager().getQueue().forEach(((uuid, s) -> ScoreboardHelper.getScoreboardHelper().deleteScoreboard(Bukkit.getPlayer(uuid))));
     }
 
     private Color getTeamColor(String team) {

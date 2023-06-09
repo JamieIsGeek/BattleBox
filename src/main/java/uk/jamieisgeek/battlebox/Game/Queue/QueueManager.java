@@ -52,7 +52,7 @@ public class QueueManager {
     }
 
     public boolean isFull() {
-        return queue.size() >= 8;
+        return queue.size() >= 4;
     }
 
     public HashMap<UUID, String> getQueue() {

@@ -39,6 +39,7 @@ public class BattleBoxAdmin implements CommandExecutor {
 
             case "kitmenu" -> GUIManager.getGuiManager().kits(player);
             case "killself" -> plugin.getGameManager().killPlayer(player, "Dream OPMG REALLL!!!!!");
+            case "forcestart" -> plugin.getGameManager().Setup();
         }
         return true;
     }
