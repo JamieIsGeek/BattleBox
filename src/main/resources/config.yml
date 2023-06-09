@@ -32,6 +32,11 @@ kits:
       - "ARROW:64"
       - "GOLDEN_APPLE:32"
     icon: "BOW"
+    armor:
+      - "DIAMOND_HELMET"
+      - "DIAMOND_CHESTPLATE"
+      - "DIAMOND_LEGGINGS"
+      - "DIAMOND_BOOTS"
 
   swordsman:
     name: "Swordsman"

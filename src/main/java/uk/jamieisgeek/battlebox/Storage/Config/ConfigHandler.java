@@ -7,16 +7,13 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import uk.jamieisgeek.battlebox.BattleBox;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 public class ConfigHandler {
     private final BattleBox plugin;
     private final ConfigHandler configHandler;
     private Configuration config;
     private Configuration messages;
-    List<File> IslandSchems = new ArrayList<>();
 
     public ConfigHandler(BattleBox plugin) {
         this.plugin = plugin;
@@ -53,6 +50,7 @@ public class ConfigHandler {
     public Object getFromConfig(String path) {
         return config.get(path);
     }
+
     public ConfigurationSection getConfigurationSection(String path) {
         return config.getConfigurationSection(path);
     }
