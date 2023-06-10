@@ -77,7 +77,7 @@ public class GameManager {
             List<UUID> keys = new ArrayList<>(queue.keySet());
             UUID randomKey = keys.get(randomIndex);
 
-            queue.remove(randomKey);
+            if(team1.contains(randomKey) || team2.contains(randomKey)) return;
 
             if (i < queue.size() / 2) {
                 team1.add(randomKey);

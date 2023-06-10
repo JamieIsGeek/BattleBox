@@ -21,7 +21,7 @@ public class ConnectionListener implements Listener {
         }
         if(plugin.getGameState().isState(State.IN_PROGRESS)) {
             plugin.getGameManager().killPlayer(event.getPlayer(), "disconnection");
-        } else if (plugin.getGameState().isState(State.LOBBY)) {
+        } else {
             plugin.getQueueManager().remove(event.getPlayer().getUniqueId());
         }
     }

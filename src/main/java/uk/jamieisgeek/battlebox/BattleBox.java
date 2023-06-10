@@ -9,6 +9,7 @@ import uk.jamieisgeek.battlebox.Game.GameManager;
 import uk.jamieisgeek.battlebox.Game.Kits.KitManager;
 import uk.jamieisgeek.battlebox.Game.Queue.QueueManager;
 import uk.jamieisgeek.battlebox.Game.State.GameState;
+import uk.jamieisgeek.battlebox.Listeners.General.ConnectionListener;
 import uk.jamieisgeek.battlebox.Listeners.Kits.KitGUIListener;
 import uk.jamieisgeek.battlebox.Storage.Config.ConfigHandler;
 import uk.jamieisgeek.battlebox.Storage.Database.Database;
@@ -53,6 +54,7 @@ public class BattleBox extends JavaPlugin {
         this.getCommand("battleboxadmin").setExecutor(new BattleBoxAdmin(this));
 
         this.getServer().getPluginManager().registerEvents(new KitGUIListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ConnectionListener(this), this);
         getLogger().info(ChatColor.GREEN + "BattleBox has been enabled!");
     }
 
